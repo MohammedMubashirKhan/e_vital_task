@@ -28,5 +28,6 @@ customeSnackbar(
     snackPosition: SnackPosition.BOTTOM,
     backgroundColor: backgroundColor,
     colorText: Colors.white,
+    margin: const EdgeInsets.only(bottom: 8.0),
   );
 }

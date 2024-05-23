@@ -1,4 +1,5 @@
 import 'package:e_vital_task/app/common%20widgets/snackbar/snackbar.dart';
+import 'package:e_vital_task/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,6 +29,7 @@ class LoginController extends GetxController {
         title: 'Success',
         message: 'Logged in successfully',
       );
+      Get.toNamed(Routes.HOME);
     } else {
       customeSnackbar(
         type: SnackbarType.error,

@@ -1,23 +1,58 @@
+import 'dart:math';
+
+import 'package:e_vital_task/app/modules/home/model/user.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  final List<User> allUsers = List.generate(
+      43,
+      (index) => User(
+            name: 'User $index',
+            phoneNumber: '1${index}3456789$index',
+            city: 'City $index',
+            imageUrl: 'https://via.placeholder.com/150',
+            stock: Random().nextInt(100) % 100,
+          ));
 
-  final count = 0.obs;
+  final RxList<User> displayedUsers = <User>[].obs;
+  final ScrollController scrollController = ScrollController();
+  int currentPage = 0;
+  int itemsPerPage = 20;
+  RxBool isLoading = false.obs;
+  RxBool hasMoreData = true.obs;
+
+  Future<void> loadMoreUsers() async {
+    await Future.delayed(const Duration(seconds: 3));
+    isLoading.value = true;
+
+    final int nextPage = currentPage + 1;
+    final int startIndex = currentPage * itemsPerPage;
+    final int endIndex = startIndex + itemsPerPage;
+    if (startIndex < allUsers.length) {
+      displayedUsers.addAll(allUsers.sublist(
+          startIndex, endIndex > allUsers.length ? allUsers.length : endIndex));
+      currentPage = nextPage;
+    }
+    if (endIndex >= allUsers.length) {
+      hasMoreData.value = false;
+    }
+
+    isLoading.value = false;
+  }
+
   @override
   void onInit() {
     super.onInit();
-  }
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+              scrollController.position.maxScrollExtent &&
+          !isLoading.value &&
+          hasMoreData.value) {
+        loadMoreUsers();
+      }
+    });
 
-  @override
-  void onReady() {
-    super.onReady();
+    loadMoreUsers();
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
