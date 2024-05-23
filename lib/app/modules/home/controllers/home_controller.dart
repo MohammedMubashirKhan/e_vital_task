@@ -55,4 +55,19 @@ class HomeController extends GetxController {
 
     loadMoreUsers();
   }
+
+  void filterUsers(String query) {
+    final filteredUsers = allUsers.where((user) {
+      final nameLower = user.name.toLowerCase();
+      final phoneLower = user.phoneNumber.toLowerCase();
+      final cityLower = user.city.toLowerCase();
+      final queryLower = query.toLowerCase();
+      return nameLower.contains(queryLower) ||
+          phoneLower.contains(queryLower) ||
+          cityLower.contains(queryLower);
+    }).toList();
+
+    displayedUsers.clear();
+    displayedUsers.addAll(filteredUsers);
+  }
 }

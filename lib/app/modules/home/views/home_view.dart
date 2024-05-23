@@ -16,25 +16,41 @@ class HomeView extends GetView<HomeController> {
         title: const Text('HomeView'),
         centerTitle: true,
       ),
-      body: Obx(
-        () => ListView.builder(
-          controller: controller.scrollController,
-          // itemCount: controller.displayedUsers.length +
-          //     1, // +1 for the loading indicator
-          itemCount: controller.displayedUsers.length +
-              (controller.hasMoreData.value
-                  ? 1
-                  : 0), // Include loading indicator only if there's more data
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: (value) => controller.filterUsers(value),
+              decoration: const InputDecoration(
+                labelText: 'Search by name, phone, or city',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          Obx(
+            () => Expanded(
+              child: ListView.builder(
+                controller: controller.scrollController,
+                // itemCount: controller.displayedUsers.length +
+                //     1, // +1 for the loading indicator
+                itemCount: controller.displayedUsers.length +
+                    (controller.hasMoreData.value
+                        ? 1
+                        : 0), // Include loading indicator only if there's more data
 
-          itemBuilder: (context, index) {
-            log("index: $index");
-            if (index == controller.displayedUsers.length &&
-                controller.hasMoreData.value) {
-              return _buildLoadingIndicator();
-            }
-            return _buildUserTile(controller.displayedUsers[index]);
-          },
-        ),
+                itemBuilder: (context, index) {
+                  log("index: $index");
+                  if (index == controller.displayedUsers.length &&
+                      controller.hasMoreData.value) {
+                    return _buildLoadingIndicator();
+                  }
+                  return _buildUserTile(controller.displayedUsers[index]);
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
