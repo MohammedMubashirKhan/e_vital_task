@@ -3,7 +3,7 @@ class User {
   final String phoneNumber;
   final String city;
   final String imageUrl;
-  final int stock;
+  int stock;
 
   User({
     required this.name,
@@ -12,4 +12,8 @@ class User {
     required this.imageUrl,
     required this.stock,
   });
+
+  void updateStock(int newStock) {
+    stock = newStock;
+  }
 }

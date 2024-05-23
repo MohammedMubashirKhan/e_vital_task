@@ -70,4 +70,39 @@ class HomeController extends GetxController {
     displayedUsers.clear();
     displayedUsers.addAll(filteredUsers);
   }
+
+  void showUpdateDialog(User user) {
+    final TextEditingController rupeeController =
+        TextEditingController(text: user.stock.toString());
+
+    Get.dialog(
+      AlertDialog(
+        title: Text('Update Rupee for ${user.name}'),
+        content: TextField(
+          controller: rupeeController,
+          decoration: const InputDecoration(labelText: 'Rupee'),
+          keyboardType: TextInputType.number,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              final int newStock =
+                  int.tryParse(rupeeController.text) ?? user.stock;
+              user.updateStock(newStock);
+              displayedUsers
+                  .refresh(); // Refresh the displayed users list to reflect the changes
+              Get.back();
+            },
+            child: const Text('Update'),
+          ),
+        ],
+      ),
+    );
+  }
 }

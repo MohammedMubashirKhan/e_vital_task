@@ -67,6 +67,7 @@ class HomeView extends GetView<HomeController> {
           Text(user.stock > 50 ? 'Stock: High' : 'Stock: Low'),
         ],
       ),
+      onTap: () => controller.showUpdateDialog(user),
     );
   }
 
