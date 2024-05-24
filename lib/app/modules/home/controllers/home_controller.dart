@@ -11,7 +11,7 @@ class HomeController extends GetxController {
             name: 'User $index',
             phoneNumber: '1${index}3456789$index',
             city: 'City $index',
-            imageUrl: 'https://source.unsplash.com/random?stocks&sig=$index',
+            imageUrl: 'https://source.unsplash.com/random?men&sig=$index',
             stock: Random().nextInt(100) % 100,
           ));
 
