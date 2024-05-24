@@ -8,7 +8,7 @@ class SplashController extends GetxController {
   Future<void> navigateToNextView() async {
     await Future.delayed(const Duration(seconds: 3));
     // Navigate to HomeView if machine code exists
-    Get.offAllNamed(Routes.HOME);
+    Get.offAllNamed(Routes.LOGIN);
   }
 
   @override
